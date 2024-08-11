@@ -16,6 +16,10 @@ module.exports = {
       supplierId: {
         type: DataTypes.INTEGER
       },
+      lotId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+      },
       batchNo: {
         type:DataTypes.STRING,
         allowNull:false

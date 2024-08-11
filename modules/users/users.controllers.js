@@ -85,6 +85,7 @@ const getUsers = async (req, res) => {
     errorResponse(res, error);
   }
 };
+
 const deleteUser = async (req, res) => {
   try {
     const { uuid } = req.params;

@@ -13,12 +13,20 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
+      scanned:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
       name: {
         type: DataTypes.STRING,
       },
       image: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      productionCost:{
+        type:DataTypes.FLOAT,
+        defaultValue:null
       },
       price: {
         type: DataTypes.FLOAT,

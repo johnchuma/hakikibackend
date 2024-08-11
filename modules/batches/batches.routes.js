@@ -1,0 +1,12 @@
+const {router, Router} = require('express')
+const { getLots, addLot, deleteLot } = require('./lots.controllers')
+const { validateJWT } = require('../../utils/validateJWT')
+const { getBatches, getBatchProducts, addBatch, addBatchProduct, deleteBatch, deleteBatchProduct } = require('./batches.controllers')
+
+const app = Router()
+app.get('/',validateJWT, getBatches)
+app.get('/products/:uuid',validateJWT, getBatchProducts)
+app.post('/',validateJWT,addBatch)
+app.post('/product/:uuid',validateJWT,addBatchProduct)
+app.delete('/',validateJWT,deleteBatch)
+app.delete('/product/:uuid',validateJWT,deleteBatchProduct)

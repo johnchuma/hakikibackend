@@ -14,11 +14,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Batch.init({
-    supplierId: {
-      type: DataTypes.INTEGER
+    uuid:{
+      type:DataTypes.UUID,
+      defaultValue:DataTypes.UUIDV4,
     },
-    batchNo:{
+    batchNo: {
       type:DataTypes.STRING,
+      allowNull:false
+    },
+    lotId:{
+      type:DataTypes.INTEGER,
       allowNull:false
     },
   }, {
