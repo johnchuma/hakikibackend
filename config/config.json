@@ -2,7 +2,7 @@
   "development": {
     "username": "default",
     "password": "ma1jIXoBM6KA",
-    "database": "hakikibackend-postgres",
+    "database": "verceldb",
     "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
     "dialect": "postgres",
     "dialectOptions": {
@@ -15,7 +15,7 @@
   "test": {
     "username": "default",
     "password": "ma1jIXoBM6KA",
-    "database": "hakikibackend-postgres",
+    "database": "verceldb",
     "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
     "dialect": "postgres",
     "dialectOptions": {
@@ -28,7 +28,7 @@
   "production": {
     "username": "default",
     "password": "ma1jIXoBM6KA",
-    "database": "hakikibackend-postgres",
+    "database": "verceldb",
     "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
     "dialect": "postgres",
     "dialectOptions": {
