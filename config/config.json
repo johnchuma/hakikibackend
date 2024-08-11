@@ -1,23 +1,41 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "hakiki",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "default",
+    "password": "ma1jIXoBM6KA",
+    "database": "hakikibackend-postgres",
+    "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "default",
+    "password": "ma1jIXoBM6KA",
+    "database": "hakikibackend-postgres",
+    "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "default",
+    "password": "ma1jIXoBM6KA",
+    "database": "hakikibackend-postgres",
+    "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }
