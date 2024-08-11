@@ -1,12 +1,20 @@
-const {router, Router} = require('express')
-const { getLots, addLot, deleteLot } = require('./lots.controllers')
-const { validateJWT } = require('../../utils/validateJWT')
-const { getBatches, getBatchProducts, addBatch, addBatchProduct, deleteBatch, deleteBatchProduct } = require('./batches.controllers')
+const { Router } = require("express");
+const { validateJWT } = require("../../utils/validateJWT");
+const {
+  getBatches,
+  getBatchProducts,
+  addBatch,
+  addBatchProduct,
+  deleteBatch,
+  deleteBatchProduct,
+} = require("./batches.controllers");
 
-const app = Router()
-app.get('/',validateJWT, getBatches)
-app.get('/products/:uuid',validateJWT, getBatchProducts)
-app.post('/',validateJWT,addBatch)
-app.post('/product/:uuid',validateJWT,addBatchProduct)
-app.delete('/',validateJWT,deleteBatch)
-app.delete('/product/:uuid',validateJWT,deleteBatchProduct)
+const router = Router();
+router.get("/", validateJWT, getBatches);
+router.get("/products/:uuid", validateJWT, getBatchProducts);
+router.post("/", validateJWT, addBatch);
+router.post("/product/:uuid", validateJWT, addBatchProduct);
+router.delete("/", validateJWT, deleteBatch);
+router.delete("/product/:uuid", validateJWT, deleteBatchProduct);
+
+module.exports = router;
