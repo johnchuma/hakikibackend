@@ -19,6 +19,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
+    "postinstall": "npm install -g pg",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

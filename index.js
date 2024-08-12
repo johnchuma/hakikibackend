@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text({ type: "/" }));
 
+
 //Routes
 app.use("/users", UserRoutes);
 app.use("/products", ProductRoutes);
