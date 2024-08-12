@@ -16,7 +16,9 @@ const app = express();
 //Middlewares
 app.use("/files", express.static("files"));
 app.use(cors());
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text({ type: "/" }));
 
 //Routes
