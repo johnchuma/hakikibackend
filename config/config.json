@@ -1,41 +1,23 @@
 {
   "development": {
-    "username": "default",
-    "password": "ma1jIXoBM6KA",
-    "database": "verceldb",
-    "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": "",
+    "database": "hakiki",
+    "host": "localhost",
+    "dialect": "mysql"
   },
   "test": {
-    "username": "default",
-    "password": "ma1jIXoBM6KA",
-    "database": "verceldb",
-    "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": "",
+    "database": "hakiki",
+    "host": "localhost",
+    "dialect": "mysql"
   },
   "production": {
-    "username": "default",
-    "password": "ma1jIXoBM6KA",
-    "database": "verceldb",
-    "host": "ep-little-king-a4zj9z5z-pooler.us-east-1.aws.neon.tech",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "require": true,
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "root",
+    "password": "",
+    "database": "hakiki",
+    "host": "localhost",
+    "dialect": "mysql"
   }
 }
