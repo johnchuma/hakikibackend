@@ -1,4 +1,5 @@
 const { User, Supplier } = require("../../models");
+const addPrefixToPhoneNumber = require("../../utils/add_number_prefix");
 const { generateJwtTokens } = require("../../utils/generateJwtTokens");
 const { randomNumber } = require("../../utils/random_number");
 const { successResponse, errorResponse } = require("../../utils/responses");
@@ -6,35 +7,52 @@ const { sendMessage } = require("../../utils/send_sms");
 
 const addUser = async (req, res) => {
   try {
-    const { phone, role, name, companyName, email } = req.body;
+    const { role, name, companyName, email, address } = req.body;
+    let phone = req.body.phone;
+    phone = addPrefixToPhoneNumber(phone);
     const verificationCode = randomNumber();
     const verificationCodeMessage = `Habari ${name}, Asante kwa kujiunga na Hakiki, Namba yako ya uthibitisho ni ${verificationCode}`;
-
-    const user = await User.create({
-      name,
-      phone,
-      role,
-      verificationCode,
-    });
-
-    if (companyName) {
-      await Supplier.create({
-        name: companyName,
-        email,
-        userId: user.id,
-      });
-    }
-    sendMessage({ numbers: [phone], message: verificationCodeMessage });
-
-    const response = await User.findOne({
+    let user;
+    user = await User.findOne({
       where: {
-        id: user.id,
+        phone,
       },
-      include: [Supplier],
     });
+    if (user) {
+      res.status(401).json({
+        status: false,
+        message: "User already exist",
+      });
+    } else {
+      user = await User.create({
+        name,
+        phone,
+        role,
+        address,
+        verificationCode,
+      });
+      const messageResponse = await sendMessage({
+        numbers: [phone],
+        message: verificationCodeMessage,
+      });
+      console.log(messageResponse);
+      if (companyName) {
+        await Supplier.create({
+          name: companyName,
+          email,
+          userId: user.id,
+        });
+      }
+      const response = await User.findOne({
+        where: {
+          id: user.id,
+        },
+        include: [Supplier],
+      });
 
-    const tokens = generateJwtTokens(response);
-    successResponse(res, { tokens, user: response });
+      const tokens = generateJwtTokens(response);
+      successResponse(res, { tokens, user: response });
+    }
   } catch (error) {
     console.log(error);
     errorResponse(res, error);
@@ -44,7 +62,8 @@ const addUser = async (req, res) => {
 const confirmCode = async (req, res) => {
   try {
     const { code } = req.body;
-    const { phone } = req.params;
+    let { phone } = req.params;
+    phone = addPrefixToPhoneNumber(phone);
     const user = await User.findOne({
       where: {
         phone,
@@ -54,9 +73,11 @@ const confirmCode = async (req, res) => {
       if (user.verificationCode == code) {
         res
           .status(200)
-          .send({ status: true, message: `Congrats! Your code is valid` });
+          .send({ status: true, message: `Congrats! Code is valid` });
       } else {
-        res.status(403).send({ status: false, message: user });
+        res
+          .status(403)
+          .send({ status: false, message: "Wrong confirmation Code" });
       }
     } else {
       res.status(404).send({ status: false, message: "User does not exist" });
@@ -70,15 +91,17 @@ const confirmCode = async (req, res) => {
 const getUsers = async (req, res) => {
   try {
     const response = await User.findAll({
-        attributes:{
-            exclude:["id"]
+      attributes: {
+        exclude: ["id"],
+      },
+      include: [
+        {
+          model: Supplier,
+          attributes: {
+            exclude: ["id", "userId", "UserId"],
+          },
         },
-        include:[{
-            model:Supplier,
-            attributes:{
-                exclude:['id',"userId","UserId"]
-              }
-        }]
+      ],
     });
     successResponse(res, response);
   } catch (error) {
@@ -93,7 +116,6 @@ const deleteUser = async (req, res) => {
       where: {
         uuid,
       },
-      
     });
     const response = await user.destroy();
     successResponse(res, response);
@@ -101,5 +123,20 @@ const deleteUser = async (req, res) => {
     errorResponse(res, error);
   }
 };
-
+const updateUser = async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+    const response = await user.update({
+      ...req.body,
+    });
+    successResponse(res, response);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+};
 module.exports = { addUser, getUsers, confirmCode, deleteUser };

@@ -1,6 +1,5 @@
 "use strict";
 
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, DataTypes) {
@@ -11,33 +10,37 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      uuid:{
-        type:DataTypes.UUID,
-        defaultValue:DataTypes.UUIDV4,
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
         type: DataTypes.STRING,
-        allowNull:true
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING,
-        unique:true
+        unique: true,
       },
       email: {
         type: DataTypes.STRING,
-        unique:true,
+        unique: true,
         allowNull: true,
       },
-      verificationCode:{
-        type:DataTypes.INTEGER,
-        allowNull:true
+      verificationCode: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       role: {
         type: DataTypes.STRING,
       },
+      language: {
+        type: DataTypes.ENUM("english", "swahili"),
+        defaultValue: "swahili",
+      },
       address: {
         type: DataTypes.STRING,
-        allowNull:true
+        allowNull: true,
       },
       password: {
         type: DataTypes.STRING,
