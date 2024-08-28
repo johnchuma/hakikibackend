@@ -5,14 +5,30 @@ const { randomNumber } = require("../../utils/random_number");
 const { successResponse, errorResponse } = require("../../utils/responses");
 const { sendMessage } = require("../../utils/send_sms");
 
+const sendConfirmationCode = async ({ phone, user }) => {
+  try {
+    phone = addPrefixToPhoneNumber(phone);
+    console.log(phone);
+    const verificationCode = randomNumber();
+    const verificationCodeMessage = `Habari ${user.name}, Asante kwa kujiunga na Hakiki, Namba yako ya uthibitisho ni ${verificationCode}`;
+    const messageResponse = await sendMessage({
+      numbers: [phone],
+      message: verificationCodeMessage,
+    });
+    const response = await user.update({
+      verificationCode,
+    });
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const addUser = async (req, res) => {
   try {
-    const { role, name, companyName, email, address } = req.body;
-    let phone = req.body.phone;
-    phone = addPrefixToPhoneNumber(phone);
-    const verificationCode = randomNumber();
-    const verificationCodeMessage = `Habari ${name}, Asante kwa kujiunga na Hakiki, Namba yako ya uthibitisho ni ${verificationCode}`;
+    let { role, phone, name, companyName, email, address } = req.body;
     let user;
+    phone = addPrefixToPhoneNumber(phone);
     user = await User.findOne({
       where: {
         phone,
@@ -31,10 +47,7 @@ const addUser = async (req, res) => {
         address,
         verificationCode,
       });
-      const messageResponse = await sendMessage({
-        numbers: [phone],
-        message: verificationCodeMessage,
-      });
+      await sendConfirmationCode({ phone, user });
       console.log(messageResponse);
       if (companyName) {
         await Supplier.create({
@@ -69,6 +82,7 @@ const confirmCode = async (req, res) => {
         phone,
       },
     });
+    console.log(user);
     if (user) {
       if (user.verificationCode == code) {
         res
@@ -82,6 +96,25 @@ const confirmCode = async (req, res) => {
     } else {
       res.status(404).send({ status: false, message: "User does not exist" });
     }
+  } catch (error) {
+    console.log(error);
+    errorResponse(res, error);
+  }
+};
+
+const resendCode = async (req, res) => {
+  try {
+    let { phone } = req.params;
+    phone = addPrefixToPhoneNumber(phone);
+    const user = await User.findOne({
+      where: {
+        phone,
+      },
+    });
+    const response = await sendConfirmationCode({ phone, user });
+    successResponse(res, {
+      message: "Code sent Successfully",
+    });
   } catch (error) {
     console.log(error);
     errorResponse(res, error);
@@ -139,4 +172,4 @@ const updateUser = async (req, res) => {
     errorResponse(res, error);
   }
 };
-module.exports = { addUser, getUsers, confirmCode, deleteUser };
+module.exports = { addUser, getUsers, confirmCode, deleteUser, resendCode };
