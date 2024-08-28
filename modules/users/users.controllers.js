@@ -111,11 +111,15 @@ const resendCode = async (req, res) => {
         phone,
       },
     });
-    const response = await sendConfirmationCode({ phone, user });
-    successResponse(res, {
-      message: "Code sent Successfully",
-      user,
-    });
+    if (user) {
+      const response = await sendConfirmationCode({ phone, user });
+      successResponse(res, {
+        message: "Code sent Successfully",
+        user,
+      });
+    } else {
+      res.status(404).send({ status: false, message: "User does not exist" });
+    }
   } catch (error) {
     console.log(error);
     errorResponse(res, error);
