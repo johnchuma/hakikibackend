@@ -114,6 +114,7 @@ const resendCode = async (req, res) => {
     const response = await sendConfirmationCode({ phone, user });
     successResponse(res, {
       message: "Code sent Successfully",
+      user,
     });
   } catch (error) {
     console.log(error);
