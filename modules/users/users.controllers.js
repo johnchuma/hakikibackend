@@ -1,10 +1,23 @@
-const { User, Supplier } = require("../../models");
+const { User, Supplier, Distributer } = require("../../models");
 const addPrefixToPhoneNumber = require("../../utils/add_number_prefix");
 const { generateJwtTokens } = require("../../utils/generateJwtTokens");
 const { randomNumber } = require("../../utils/random_number");
 const { successResponse, errorResponse } = require("../../utils/responses");
 const { sendMessage } = require("../../utils/send_sms");
 
+const findUserByUUID = async (uuid) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        uuid,
+      },
+    });
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 const sendConfirmationCode = async ({ phone, user }) => {
   try {
     phone = addPrefixToPhoneNumber(phone);
@@ -26,7 +39,8 @@ const sendConfirmationCode = async ({ phone, user }) => {
 
 const addUser = async (req, res) => {
   try {
-    let { role, phone, name, companyName, email, address } = req.body;
+    let { role, phone, name, companyName, businessName, email, address } =
+      req.body;
     let user;
     phone = addPrefixToPhoneNumber(phone);
     user = await User.findOne({
@@ -45,13 +59,18 @@ const addUser = async (req, res) => {
         phone,
         role,
         address,
-        verificationCode,
       });
       await sendConfirmationCode({ phone, user });
-      console.log(messageResponse);
-      if (companyName) {
+      if (role == "supplier") {
         await Supplier.create({
           name: companyName,
+          email,
+          userId: user.id,
+        });
+      }
+      if (role == "distributer") {
+        await Distributer.create({
+          businessName,
           email,
           userId: user.id,
         });
@@ -60,11 +79,10 @@ const addUser = async (req, res) => {
         where: {
           id: user.id,
         },
-        include: [Supplier],
+        include: [Supplier, Distributer],
       });
 
-      const tokens = generateJwtTokens(response);
-      successResponse(res, { tokens, user: response });
+      successResponse(res, { tokens: "", user: response });
     }
   } catch (error) {
     console.log(error);
@@ -85,9 +103,10 @@ const confirmCode = async (req, res) => {
     console.log(user);
     if (user) {
       if (user.verificationCode == code) {
-        res
-          .status(200)
-          .send({ status: true, message: `Congrats! Code is valid` });
+        res.status(200).send({
+          status: true,
+          token: generateJwtTokens(user),
+        });
       } else {
         res
           .status(403)
@@ -102,7 +121,7 @@ const confirmCode = async (req, res) => {
   }
 };
 
-const resendCode = async (req, res) => {
+const sendCode = async (req, res) => {
   try {
     let { phone } = req.params;
     phone = addPrefixToPhoneNumber(phone);
@@ -177,4 +196,11 @@ const updateUser = async (req, res) => {
     errorResponse(res, error);
   }
 };
-module.exports = { addUser, getUsers, confirmCode, deleteUser, resendCode };
+module.exports = {
+  addUser,
+  findUserByUUID,
+  getUsers,
+  confirmCode,
+  deleteUser,
+  sendCode,
+};

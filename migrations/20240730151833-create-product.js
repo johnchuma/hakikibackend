@@ -13,9 +13,9 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      scanned:{
+      scanned: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -24,9 +24,9 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      productionCost:{
-        type:DataTypes.FLOAT,
-        defaultValue:null
+      productionCost: {
+        type: DataTypes.FLOAT,
+        defaultValue: null,
       },
       price: {
         type: DataTypes.FLOAT,
@@ -62,7 +62,11 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      supplierId: {
+      qrCode: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

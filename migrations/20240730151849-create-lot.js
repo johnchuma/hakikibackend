@@ -13,7 +13,7 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      supplierId: {
+      userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

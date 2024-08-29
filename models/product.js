@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     /**
@@ -11,61 +9,71 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Product.hasOne(models.FarmerProduct);
+      Product.hasOne(models.BatchProduct);
+      Product.belongsTo(models.User, { as: "supplier", foreignKey: "userId" });
     }
   }
-  Product.init({
-    uuid:{
-      type:DataTypes.UUID,
-      defaultValue:DataTypes.UUIDV4,
+  Product.init(
+    {
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
+      name: {
+        type: DataTypes.STRING,
+      },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.FLOAT,
+      },
+      manufactureDate: {
+        type: DataTypes.DATE,
+      },
+      expireDate: {
+        type: DataTypes.DATE,
+      },
+      introduction: {
+        type: DataTypes.TEXT,
+      },
+      details: {
+        type: DataTypes.TEXT,
+      },
+      usageDetails: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      videoLink: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      OID: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      size: {
+        type: DataTypes.DOUBLE,
+      },
+      scratchCode: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      qrCode: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    name: {
-      type: DataTypes.STRING,
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull:false
-    },
-    price: {
-      type: DataTypes.FLOAT,
-    },
-    manufactureDate: {
-      type: DataTypes.DATE,
-    },
-    expireDate: {
-      type: DataTypes.DATE,
-    },
-    introduction: {
-      type: DataTypes.TEXT,
-    },
-    details: {
-      type: DataTypes.TEXT,
-    },
-    usageDetails: {
-      type: DataTypes.TEXT,
-      allowNull:true
-    },
-    videoLink: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    OID: {
-      type: DataTypes.STRING,
-      allowNull:true
-    },
-    size: {
-      type: DataTypes.DOUBLE,
-    },
-    scratchCode: {
-      type: DataTypes.STRING,
-      allowNull:true
-    },
-    supplierId: {
-      type: DataTypes.INTEGER,
-      allowNull:false
+    {
+      sequelize,
+      modelName: "Product",
     }
-  }, {
-    sequelize,
-    modelName: 'Product',
-  });
+  );
   return Product;
 };

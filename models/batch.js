@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+const { Lot } = require("../models");
 module.exports = (sequelize, DataTypes) => {
   class Batch extends Model {
     /**
@@ -10,25 +9,31 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Batch.hasMany(models.BatchProduct);
+      Batch.hasMany(models.DistributorProduct);
+      Batch.belongsTo(models.Lot);
       // define association here
     }
   }
-  Batch.init({
-    uuid:{
-      type:DataTypes.UUID,
-      defaultValue:DataTypes.UUIDV4,
+  Batch.init(
+    {
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
+      batchNo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lotId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    batchNo: {
-      type:DataTypes.STRING,
-      allowNull:false
-    },
-    lotId:{
-      type:DataTypes.INTEGER,
-      allowNull:false
-    },
-  }, {
-    sequelize,
-    modelName: 'Batch',
-  });
+    {
+      sequelize,
+      modelName: "Batch",
+    }
+  );
   return Batch;
 };

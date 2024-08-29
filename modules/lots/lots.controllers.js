@@ -1,15 +1,27 @@
 const { Lot, Supplier } = require("../../models");
 const { randomNumber } = require("../../utils/random_number");
 const { errorResponse, successResponse } = require("../../utils/responses");
-
+const findLotByUUID = async (uuid) => {
+  try {
+    const response = await Lot.findOne({
+      where: {
+        uuid,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 const addLot = async (req, res) => {
   try {
     const { packageSize, stickersCount } = req.body;
     let lotNo = randomNumber();
-    let supplierId = req.user.Supplier.id;
+    let userId = req.user.id;
     const lot = await Lot.create({
       lotNo,
-      supplierId,
+      userId,
       packageSize,
       stickersCount,
     });
@@ -22,17 +34,17 @@ const getLots = async (req, res) => {
   try {
     const response = await Lot.findAll({
       where: {
-        supplierId: req.user.Supplier.id,
+        userId: req.user.id,
       },
     });
     successResponse(res, response);
   } catch (error) {
-    errorResponse(res,response)
+    errorResponse(res, response);
   }
 };
 const deleteLot = async (req, res) => {
   try {
-    const { uuid } = req.params();
+    const { uuid } = req.params;
     const lot = await Lot.findOne({
       where: {
         uuid,
@@ -43,4 +55,4 @@ const deleteLot = async (req, res) => {
   } catch (error) {}
 };
 
-module.exports = { addLot, deleteLot,getLots };
+module.exports = { addLot, deleteLot, getLots, findLotByUUID };
