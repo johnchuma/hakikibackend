@@ -1,7 +1,14 @@
 {
-  "development": {
+  "developmen": {
     "username": "root",
     "password": "",
+    "database": "hakiki",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "development": {
+    "username": "root",
+    "password": "Hakiki@2024bypaul",
     "database": "hakiki",
     "host": "127.0.0.1",
     "dialect": "mysql"
