@@ -146,7 +146,7 @@ const checkIfIsGenuine = async (req, res) => {
         ],
       },
     });
-    const isGenuine = true;
+    let isGenuine = true;
     if (!product) {
       isGenuine = false;
     } else {
