@@ -139,7 +139,9 @@ const checkIfIsGenuine = async (req, res) => {
             uuid,
           },
           {
-            isGenuine: true,
+            expireDate: {
+              [Op.gte]: new Date(),
+            },
           },
         ],
       },
