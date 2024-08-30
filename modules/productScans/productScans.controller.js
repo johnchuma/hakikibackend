@@ -32,11 +32,12 @@ const addProductScan = async (req, res) => {
 const getProductScans = async (req, res) => {
   try {
     const userId = req.user.id;
-    print(req.user.id);
+    console.log(req.user.id);
     const response = await ProductScan.findAll({ userId, include: [Product] });
     successResponse(res, response);
   } catch (error) {
-    errorResponse(res, response);
+    console.log(error);
+    errorResponse(res, error);
   }
 };
 const deleteProductScan = async (req, res) => {
