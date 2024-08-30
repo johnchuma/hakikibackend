@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {
   Product,
   User,
@@ -120,13 +121,39 @@ const addProduct = async (req, res) => {
 const getProduct = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const response = await Product.findOne({
-      where: {
-        uuid,
-      },
-    });
+    const response = await findProductByUUID(uuid);
 
     successResponse(res, response);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+};
+
+const checkIfIsGenuine = async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const product = await Product.findOne({
+      where: {
+        [Op.and]: [
+          {
+            uuid,
+          },
+          {
+            isGenuine: true,
+          },
+        ],
+      },
+    });
+    const isGenuine = true;
+    if (!product) {
+      isGenuine = false;
+    } else {
+      await product.update({
+        isGenuine: false,
+      });
+    }
+
+    successResponse(res, { isGenuine });
   } catch (error) {
     errorResponse(res, error);
   }
@@ -176,6 +203,7 @@ module.exports = {
   getProducts,
   findAllProductInfo,
   findProductByUUID,
+  checkIfIsGenuine,
   getSupplierProducts,
   getProduct,
 };

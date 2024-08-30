@@ -56,6 +56,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       size: {
         type: DataTypes.DOUBLE,
+        allowNull: true,
+      },
+      isGenuine: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
       scratchCode: {
         type: DataTypes.STRING,

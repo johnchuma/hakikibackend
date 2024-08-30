@@ -7,6 +7,7 @@ const {
   getSupplierProducts,
   getProduct,
   findAllProductInfo,
+  checkIfIsGenuine,
 } = require("./products.controllers");
 const upload = require("../../utils/upload");
 const router = Router();
@@ -15,6 +16,7 @@ router.post("/", validateJWT, upload.single("file"), addProduct);
 router.get("/", validateJWT, getProducts);
 router.get("/supplier", validateJWT, getSupplierProducts);
 router.get("/details/:uuid", validateJWT, findAllProductInfo);
+router.get("/check/:uuid", validateJWT, checkIfIsGenuine);
 router.get("/:uuid", validateJWT, getProduct);
 router.delete("/:uuid", deleteProduct);
 

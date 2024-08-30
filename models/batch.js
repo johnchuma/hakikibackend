@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const { Lot } = require("../models");
 module.exports = (sequelize, DataTypes) => {
   class Batch extends Model {
     /**
