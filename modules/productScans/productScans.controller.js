@@ -1,4 +1,4 @@
-const { ProductScan } = require("../../models");
+const { ProductScan, Product } = require("../../models");
 const { randomNumber } = require("../../utils/random_number");
 const { errorResponse, successResponse } = require("../../utils/responses");
 const { findProductByUUID } = require("../products/products.controllers");
@@ -32,6 +32,7 @@ const addProductScan = async (req, res) => {
 const getProductScans = async (req, res) => {
   try {
     const userId = req.user.id;
+    print(req.user.id);
     const response = await ProductScan.findAll({ userId, include: [Product] });
     successResponse(res, response);
   } catch (error) {
