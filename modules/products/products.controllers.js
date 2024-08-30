@@ -44,7 +44,7 @@ const findAllProductInfo = async (req, res) => {
         uuid,
       },
       attributes: {
-        exclude: ["qrCode"],
+        exclude: ["qrCode", "UserId", "userId"],
       },
       include: [
         {
