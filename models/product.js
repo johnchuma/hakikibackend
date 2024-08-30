@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Product.hasOne(models.FarmerProduct);
       Product.hasOne(models.BatchProduct);
+      Product.hasOne(models.ProductScan);
       Product.belongsTo(models.User, { as: "supplier", foreignKey: "userId" });
     }
   }

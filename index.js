@@ -11,6 +11,9 @@ const LotsRoutes = require("./modules/lots/lots.routes");
 const BatchesRoutes = require("./modules/batches/batches.routes");
 const DistributerProductRoutes = require("./modules/distributerProducts/distributerProducts.routes");
 const FarmerProductRoutes = require("./modules/farmerProducts/farmerProducts.routes");
+const ReviewRoutes = require("./modules/reviews/reviews.routes");
+const ProductScanRoutes = require("./modules/productScans/productScans.routes");
+
 const QRCode = require("qrcode");
 //Initiate express
 const app = express();
@@ -28,6 +31,8 @@ app.use("/users", UserRoutes);
 app.use("/products", ProductRoutes);
 app.use("/lots", LotsRoutes);
 app.use("/batches", BatchesRoutes);
+app.use("/reviews", ReviewRoutes);
+app.use("/productScans", ProductScanRoutes);
 app.use("/farmerProducts", FarmerProductRoutes);
 app.use("/distributerProducts", DistributerProductRoutes);
 app.get("/", async (req, res) => {

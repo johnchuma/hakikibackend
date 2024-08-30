@@ -165,7 +165,15 @@ const getUsers = async (req, res) => {
     errorResponse(res, error);
   }
 };
-
+const getMyInfo = async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const user = await findUserByUUID(uuid);
+    successResponse(res, user);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+};
 const deleteUser = async (req, res) => {
   try {
     const { uuid } = req.params;
@@ -183,11 +191,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const user = await User.findOne({
-      where: {
-        uuid,
-      },
-    });
+    const user = await findUserByUUID(uuid);
     const response = await user.update({
       ...req.body,
     });
@@ -202,5 +206,7 @@ module.exports = {
   getUsers,
   confirmCode,
   deleteUser,
+  getMyInfo,
+  updateUser,
   sendCode,
 };
