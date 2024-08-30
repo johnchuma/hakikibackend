@@ -15,6 +15,7 @@ module.exports = {
       },
       productId: {
         type: DataTypes.INTEGER,
+        unique: true,
         allowNull: false,
       },
       userId: {
