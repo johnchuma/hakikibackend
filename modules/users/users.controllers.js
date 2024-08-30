@@ -165,11 +165,20 @@ const getUsers = async (req, res) => {
     errorResponse(res, error);
   }
 };
-const getMyInfo = async (req, res) => {
+const getUserInfo = async (req, res) => {
   try {
     const { uuid } = req.params;
     const user = await findUserByUUID(uuid);
     successResponse(res, user);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+};
+const getMyInfo = async (req, res) => {
+  try {
+    const user = req.user;
+    const response = await findUserByUUID(user.uuid);
+    successResponse(res, response);
   } catch (error) {
     errorResponse(res, error);
   }
@@ -206,6 +215,7 @@ module.exports = {
   getUsers,
   confirmCode,
   deleteUser,
+  getUserInfo,
   getMyInfo,
   updateUser,
   sendCode,
