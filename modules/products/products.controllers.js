@@ -39,7 +39,7 @@ const generateProductQRCode = async (product) => {
 const findAllProductInfo = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const product = await Product.findAll({
+    const product = await Product.findOne({
       where: {
         uuid,
       },
