@@ -8,6 +8,7 @@ const {
   getProduct,
   findAllProductInfo,
   checkIfIsGenuine,
+  checkProductWithScratchCode,
 } = require("./products.controllers");
 const upload = require("../../utils/upload");
 const router = Router();
@@ -17,6 +18,7 @@ router.get("/", validateJWT, getProducts);
 router.get("/supplier", validateJWT, getSupplierProducts);
 router.get("/details/:uuid", validateJWT, findAllProductInfo);
 router.get("/check/:uuid", validateJWT, checkIfIsGenuine);
+router.post("/verify/sms", checkProductWithScratchCode);
 router.get("/:uuid", validateJWT, getProduct);
 router.delete("/:uuid", deleteProduct);
 

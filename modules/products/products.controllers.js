@@ -169,6 +169,45 @@ const getProducts = async (req, res) => {
     errorResponse(res, error);
   }
 };
+const checkProductWithScratchCode = async (req, res) => {
+  try {
+    const data = req.body;
+    console.log(data);
+    // const scratchCode = data.split("HAKIKI ")[1];
+    // const product = await Product.findOne({
+    //   where: {
+    //     [Op.and]: [
+    //       {
+    //         scratchCode,
+    //       },
+    //       {
+    //         expireDate: {
+    //           [Op.gte]: new Date(),
+    //         },
+    //       },
+    //     ],
+    //   },
+    // });
+    // let isGenuine = false;
+    // let phone = addPrefixToPhoneNumber(phone);
+    // let feedback;
+
+    // if (product) {
+    //   isGenuine = true;
+    //   feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi. Jina la bidhaa: ${product.name}. Tarehe ya kutengenezwa: ${product.manufactureDate}. Tarehe ya kuharibika: ${product.expireDate}.`;
+    // } else {
+    //   feedback = `Habari, bidhaa yako ni batili. Tafadhali piga simu kwa namba +255752091764 kwa msaada zaidi.`;
+    // }
+    // await sendMessage({
+    //   numbers: [phone],
+    //   message: feedback,
+    // });
+    // successResponse(res, { isGenuine, product });
+    res.status(200);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+};
 
 const getSupplierProducts = async (req, res) => {
   try {
@@ -206,6 +245,7 @@ module.exports = {
   findAllProductInfo,
   findProductByUUID,
   checkIfIsGenuine,
+  checkProductWithScratchCode,
   getSupplierProducts,
   getProduct,
 };
