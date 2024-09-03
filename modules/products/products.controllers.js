@@ -8,7 +8,10 @@ const {
   Lot,
 } = require("../../models");
 const getUrl = require("../../utils/get_url");
-const { randomNumber } = require("../../utils/random_number");
+const {
+  randomNumber,
+  randomNumberWith12Chars,
+} = require("../../utils/random_number");
 const { successResponse, errorResponse } = require("../../utils/responses");
 const { sendMessage } = require("../../utils/send_sms");
 const QRCode = require("qrcode");
@@ -96,6 +99,7 @@ const addProduct = async (req, res) => {
       image = await getUrl(req);
     }
     const user = req.user;
+    const scratchCode = randomNumberWith12Chars();
     const product = await Product.create({
       name,
       image,
@@ -103,6 +107,7 @@ const addProduct = async (req, res) => {
       expireDate,
       details,
       introduction,
+      scratchCode,
       OID,
       size,
       userId: user.id,
@@ -171,38 +176,42 @@ const getProducts = async (req, res) => {
 };
 const checkProductWithScratchCode = async (req, res) => {
   try {
-    const data = req.body;
+    const { text, date, from } = req.body;
     console.log(data);
-    // const scratchCode = data.split("HAKIKI ")[1];
-    // const product = await Product.findOne({
-    //   where: {
-    //     [Op.and]: [
-    //       {
-    //         scratchCode,
-    //       },
-    //       {
-    //         expireDate: {
-    //           [Op.gte]: new Date(),
-    //         },
-    //       },
-    //     ],
-    //   },
-    // });
-    // let isGenuine = false;
-    // let phone = addPrefixToPhoneNumber(phone);
-    // let feedback;
+    const scratchCode = text.split(" ")[1];
+    const product = await Product.findOne({
+      where: {
+        [Op.and]: [
+          {
+            scratchCode,
+          },
+          {
+            expireDate: {
+              [Op.gte]: new Date(),
+            },
+          },
+        ],
+      },
+    });
+    let isGenuine = false;
+    let phone = addPrefixToPhoneNumber(phone);
+    let feedback;
 
-    // if (product) {
-    //   isGenuine = true;
-    //   feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi. Jina la bidhaa: ${product.name}. Tarehe ya kutengenezwa: ${product.manufactureDate}. Tarehe ya kuharibika: ${product.expireDate}.`;
-    // } else {
-    //   feedback = `Habari, bidhaa yako ni batili. Tafadhali piga simu kwa namba +255752091764 kwa msaada zaidi.`;
-    // }
-    // await sendMessage({
-    //   numbers: [phone],
-    //   message: feedback,
-    // });
-    // successResponse(res, { isGenuine, product });
+    if (product) {
+      isGenuine = true;
+      feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi.
+       Jina la bidhaa: ${product.name}. 
+       Tarehe ya kutengenezwa: ${product.manufactureDate}. T
+       arehe ya kuharibika: ${product.expireDate}.`;
+    } else {
+      feedback = `Habari, bidhaa yako ni batili. Tafadhali 
+      piga simu kwa namba +255752091764 kwa msaada zaidi.`;
+    }
+    await sendMessage({
+      numbers: [from],
+      message: feedback,
+    });
+    successResponse(res, { isGenuine, product });
     res.status(200);
   } catch (error) {
     errorResponse(res, error);
