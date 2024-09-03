@@ -228,7 +228,16 @@ const getSupplierProducts = async (req, res) => {
     errorResponse(res, error);
   }
 };
-
+const updateProduct = async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const product = await findProductByUUID(uuid);
+    const response = await product.update(req.body);
+    successResponse(res, response);
+  } catch (error) {
+    errorResponse(res, error);
+  }
+};
 const deleteProduct = async (req, res) => {
   try {
     const { uuid } = req.params;
@@ -250,6 +259,7 @@ module.exports = {
   getProducts,
   findAllProductInfo,
   findProductByUUID,
+  updateProduct,
   checkIfIsGenuine,
   checkProductWithScratchCode,
   getSupplierProducts,
