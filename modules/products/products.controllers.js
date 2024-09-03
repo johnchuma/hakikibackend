@@ -16,6 +16,7 @@ const { successResponse, errorResponse } = require("../../utils/responses");
 const { sendMessage } = require("../../utils/send_sms");
 const QRCode = require("qrcode");
 const addPrefixToPhoneNumber = require("../../utils/add_number_prefix");
+const moment = require("moment");
 
 const findProductByUUID = async (uuid) => {
   try {
@@ -200,7 +201,13 @@ const checkProductWithScratchCode = async (req, res) => {
 
     if (product) {
       isGenuine = true;
-      feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi.Jina la bidhaa: ${product.name}. Tarehe ya kutengenezwa: ${product.manufactureDate}. Tarehe ya kuharibika: ${product.expireDate}.`;
+      feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi.Jina la bidhaa: ${
+        product.name
+      }. Tarehe ya kutengenezwa: ${moment(
+        new Date(product.manufactureDate)
+      ).format("yyy-MM-DD")}. Tarehe ya kuharibika: ${moment(
+        new Date(product.expireDate)
+      ).format("yyy-MM-DD")}.`;
     } else {
       feedback = `Habari, bidhaa yako ni batili. Tafadhali piga simu kwa namba +255752091764 kwa msaada zaidi.`;
     }
