@@ -194,7 +194,7 @@ const checkProductWithScratchCode = async (req, res) => {
       },
     });
     let isGenuine = false;
-    let phone = addPrefixToPhoneNumber(phone);
+    let phone = addPrefixToPhoneNumber(from);
     let feedback;
 
     if (product) {
@@ -208,7 +208,7 @@ const checkProductWithScratchCode = async (req, res) => {
       piga simu kwa namba +255752091764 kwa msaada zaidi.`;
     }
     await sendMessage({
-      numbers: [from],
+      numbers: [phone],
       message: feedback,
     });
     successResponse(res, { isGenuine, product });
