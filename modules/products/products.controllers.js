@@ -15,6 +15,7 @@ const {
 const { successResponse, errorResponse } = require("../../utils/responses");
 const { sendMessage } = require("../../utils/send_sms");
 const QRCode = require("qrcode");
+const addPrefixToPhoneNumber = require("../../utils/add_number_prefix");
 
 const findProductByUUID = async (uuid) => {
   try {
