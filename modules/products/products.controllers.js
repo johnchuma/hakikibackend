@@ -178,8 +178,8 @@ const getProducts = async (req, res) => {
 };
 const checkProductWithScratchCode = async (req, res) => {
   try {
-    const { text, date, from } = req.body;
-    // console.log(data);
+    const { text = "", date, from } = req.body;
+    console.log(data);
     const scratchCode = text.split(" ")[1];
     const product = await Product.findOne({
       where: {
