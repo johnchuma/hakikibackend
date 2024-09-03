@@ -200,13 +200,9 @@ const checkProductWithScratchCode = async (req, res) => {
 
     if (product) {
       isGenuine = true;
-      feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi.
-       Jina la bidhaa: ${product.name}. 
-       Tarehe ya kutengenezwa: ${product.manufactureDate}. T
-       arehe ya kuharibika: ${product.expireDate}.`;
+      feedback = `Habari, bidhaa yako imehakikishwa kuwa ni sahihi.Jina la bidhaa: ${product.name}. Tarehe ya kutengenezwa: ${product.manufactureDate}. Tarehe ya kuharibika: ${product.expireDate}.`;
     } else {
-      feedback = `Habari, bidhaa yako ni batili. Tafadhali 
-      piga simu kwa namba +255752091764 kwa msaada zaidi.`;
+      feedback = `Habari, bidhaa yako ni batili. Tafadhali piga simu kwa namba +255752091764 kwa msaada zaidi.`;
     }
     await sendMessage({
       numbers: [phone],
