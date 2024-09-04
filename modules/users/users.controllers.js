@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { User, Supplier, Distributer } = require("../../models");
 const addPrefixToPhoneNumber = require("../../utils/add_number_prefix");
 const { generateJwtTokens } = require("../../utils/generateJwtTokens");
@@ -208,6 +209,7 @@ const getUserInfo = async (req, res) => {
     errorResponse(res, error);
   }
 };
+
 const getMyInfo = async (req, res) => {
   try {
     const user = req.user;

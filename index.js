@@ -15,6 +15,7 @@ const ReviewRoutes = require("./modules/reviews/reviews.routes");
 const ProductScanRoutes = require("./modules/productScans/productScans.routes");
 const DistributerRoutes = require("./modules/distributors/distributers.routes");
 const SupplierRoutes = require("./modules/suppliers/suppliers.routes");
+const AnalyticsRoutes = require("./modules/analytics/analytics.routes");
 
 const QRCode = require("qrcode");
 //Initiate express
@@ -38,6 +39,7 @@ app.use("/distributers", DistributerRoutes);
 app.use("/suppliers", SupplierRoutes);
 app.use("/productScans", ProductScanRoutes);
 app.use("/farmerProducts", FarmerProductRoutes);
+app.use("/analytics", AnalyticsRoutes);
 app.use("/distributerProducts", DistributerProductRoutes);
 app.get("/", async (req, res) => {
   try {
