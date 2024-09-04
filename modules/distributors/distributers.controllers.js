@@ -40,7 +40,7 @@ const getDistributors = async (req, res) => {
     });
     successResponse(res, response);
   } catch (error) {
-    errorResponse(res, response);
+    errorResponse(res, error);
   }
 };
 const deleteDistributor = async (req, res) => {
