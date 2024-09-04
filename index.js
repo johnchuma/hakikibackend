@@ -34,7 +34,7 @@ app.use("/products", ProductRoutes);
 app.use("/lots", LotsRoutes);
 app.use("/batches", BatchesRoutes);
 app.use("/reviews", ReviewRoutes);
-app.use("/distributors", DistributerRoutes);
+app.use("/distributers", DistributerRoutes);
 app.use("/suppliers", SupplierRoutes);
 app.use("/productScans", ProductScanRoutes);
 app.use("/farmerProducts", FarmerProductRoutes);
