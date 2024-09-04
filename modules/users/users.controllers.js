@@ -150,7 +150,7 @@ const sendCode = async (req, res) => {
 };
 const login = async (req, res) => {
   try {
-    let { email, password } = req.params;
+    let { email, password } = req.body;
     const user = await User.findOne({
       where: {
         email,
