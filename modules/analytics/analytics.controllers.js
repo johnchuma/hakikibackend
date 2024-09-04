@@ -28,7 +28,7 @@ const getOverviewStats = async (req, res) => {
         },
       },
     });
-    const totalFarmers = await User.findAll({
+    const totalFarmers = await User.count({
       where: {
         role: "farmer",
       },
