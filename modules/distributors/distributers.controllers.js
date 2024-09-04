@@ -1,9 +1,9 @@
-const { Distributor, User } = require("../../models");
+const { Distributer, User } = require("../../models");
 const { randomNumber } = require("../../utils/random_number");
 const { errorResponse, successResponse } = require("../../utils/responses");
-const findDistributorByUUID = async (uuid) => {
+const findDistributerByUUID = async (uuid) => {
   try {
-    const response = await Distributor.findOne({
+    const response = await Distributer.findOne({
       where: {
         uuid,
       },
@@ -14,25 +14,25 @@ const findDistributorByUUID = async (uuid) => {
     throw error;
   }
 };
-const addDistributor = async (req, res) => {
+const addDistributer = async (req, res) => {
   try {
     const { packageSize, stickersCount } = req.body;
-    let distributorNo = randomNumber();
+    let distributerNo = randomNumber();
     let userId = req.user.id;
-    const distributor = await Distributor.create({
-      distributorNo,
+    const distributer = await Distributer.create({
+      distributerNo,
       userId,
       packageSize,
       stickersCount,
     });
-    successResponse(res, distributor);
+    successResponse(res, distributer);
   } catch (error) {
     errorResponse(res, error);
   }
 };
-const getDistributors = async (req, res) => {
+const getDistributers = async (req, res) => {
   try {
-    const response = await Distributor.findAll({
+    const response = await Distributer.findAll({
       where: {
         userId: req.user.id,
       },
@@ -43,19 +43,19 @@ const getDistributors = async (req, res) => {
     errorResponse(res, error);
   }
 };
-const deleteDistributor = async (req, res) => {
+const deleteDistributer = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const distributor = await findDistributorByUUID(uuid);
-    const response = await distributor.destroy();
+    const distributer = await findDistributerByUUID(uuid);
+    const response = await distributer.destroy();
     successResponse(res, response);
   } catch (error) {}
 };
-const updateDistributor = async (req, res) => {
+const updateDistributer = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const distributor = await findDistributorByUUID(uuid);
-    const response = await distributor.update({
+    const distributer = await findDistributerByUUID(uuid);
+    const response = await distributer.update({
       ...req.body,
     });
     successResponse(res, response);
@@ -63,9 +63,9 @@ const updateDistributor = async (req, res) => {
 };
 
 module.exports = {
-  addDistributor,
-  deleteDistributor,
-  getDistributors,
-  updateDistributor,
-  findDistributorByUUID,
+  addDistributer,
+  deleteDistributer,
+  getDistributers,
+  updateDistributer,
+  findDistributerByUUID,
 };

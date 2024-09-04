@@ -2,16 +2,16 @@ const { Router } = require("express");
 
 const { validateJWT } = require("../../utils/validateJWT");
 const {
-  getDistributors,
-  addDistributor,
-  deleteDistributor,
-  updateDistributor,
+  getDistributers,
+  addDistributer,
+  deleteDistributer,
+  updateDistributer,
 } = require("./distributers.controllers");
 
 const router = Router();
-router.get("/", validateJWT, getDistributors);
-router.post("/", validateJWT, addDistributor);
-router.delete("/:uuid", validateJWT, deleteDistributor);
-router.patch("/:uuid", validateJWT, updateDistributor);
+router.get("/", validateJWT, getDistributers);
+router.post("/", validateJWT, addDistributer);
+router.delete("/:uuid", validateJWT, deleteDistributer);
+router.patch("/:uuid", validateJWT, updateDistributer);
 
 module.exports = router;
