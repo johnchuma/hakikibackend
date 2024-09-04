@@ -157,7 +157,7 @@ const login = async (req, res) => {
       },
     });
     if (user) {
-      const result = bcrypt.compare(password, user.password);
+      const result = await bcrypt.compare(password, user.password);
       console.log(result);
       if (result) {
         const token = generateJwtTokens(user);
