@@ -6,7 +6,7 @@ const getOverviewStats = async (req, res) => {
     const totalUsers = await User.count();
     const totalUsersToday = await User.count({
       where: {
-        createAt: {
+        createdAt: {
           [Op.eq]: Date.now(),
         },
       },
@@ -14,7 +14,7 @@ const getOverviewStats = async (req, res) => {
     const totalProducts = await Product.count();
     const totalProductsToday = await Product.count({
       where: {
-        createAt: {
+        createdAt: {
           [Op.eq]: Date.now(),
         },
       },
@@ -22,7 +22,7 @@ const getOverviewStats = async (req, res) => {
     const totalScans = await ProductScan.count();
     const totalScansToday = await ProductScan.count({
       where: {
-        createAt: {
+        createdAt: {
           [Op.eq]: Date.now(),
         },
       },
@@ -35,7 +35,7 @@ const getOverviewStats = async (req, res) => {
     const totalFarmersToday = await User.count({
       where: {
         [Op.and]: {
-          createAt: {
+          createdAt: {
             [Op.eq]: Date.now(),
           },
           role: "farmer",
