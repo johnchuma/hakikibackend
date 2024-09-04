@@ -43,7 +43,7 @@ const getDistributorProducts = async (req, res) => {
     });
     successResponse(res, response);
   } catch (error) {
-    errorResponse(res, response);
+    errorResponse(res, error);
   }
 };
 const deleteDistributorProduct = async (req, res) => {

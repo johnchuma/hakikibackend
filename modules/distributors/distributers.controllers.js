@@ -1,4 +1,4 @@
-const { Distributor, Supplier, User } = require("../../models");
+const { Distributor, User } = require("../../models");
 const { randomNumber } = require("../../utils/random_number");
 const { errorResponse, successResponse } = require("../../utils/responses");
 const findDistributorByUUID = async (uuid) => {
