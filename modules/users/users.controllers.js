@@ -4,6 +4,7 @@ const { generateJwtTokens } = require("../../utils/generateJwtTokens");
 const { randomNumber } = require("../../utils/random_number");
 const { successResponse, errorResponse } = require("../../utils/responses");
 const { sendMessage } = require("../../utils/send_sms");
+const bcrypt = require("bcrypt");
 
 const findUserByUUID = async (uuid) => {
   try {
@@ -54,9 +55,12 @@ const addUser = async (req, res) => {
         message: "User already exist",
       });
     } else {
+      const password = bcrypt.hashSync(123456, 20);
       user = await User.create({
         name,
         phone,
+        password,
+        email,
         role,
         address,
       });
@@ -144,7 +148,36 @@ const sendCode = async (req, res) => {
     errorResponse(res, error);
   }
 };
-
+const login = async (req, res) => {
+  try {
+    let { email, password } = req.params;
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+    if (user) {
+      const result = bcrypt.compare(password, user.password);
+      if (result) {
+        const token = generateJwtTokens(user);
+        res.status(200).json({
+          token,
+          status: true,
+        });
+      } else {
+        res.status(401).send({
+          status: false,
+          message: "Wrong password",
+        });
+      }
+    } else {
+      res.status(404).send({ status: false, message: "User does not exist" });
+    }
+  } catch (error) {
+    console.log(error);
+    errorResponse(res, error);
+  }
+};
 const getUsers = async (req, res) => {
   try {
     const response = await User.findAll({
@@ -213,6 +246,7 @@ module.exports = {
   addUser,
   findUserByUUID,
   getUsers,
+  login,
   confirmCode,
   deleteUser,
   getUserInfo,

@@ -8,6 +8,7 @@ const {
   updateUser,
   getMyInfo,
   getUserInfo,
+  login,
 } = require("./users.controllers");
 const { validateJWT } = require("../../utils/validateJWT");
 const router = Router();
@@ -15,6 +16,7 @@ const router = Router();
 router.post("/", addUser);
 router.post("/confirm/:phone", confirmCode);
 router.post("/sendCode/:phone", sendCode);
+router.post("/login", login);
 router.patch("/:uuid", updateUser);
 router.get("/me", validateJWT, getMyInfo);
 router.get("/:uuid", getUserInfo);
