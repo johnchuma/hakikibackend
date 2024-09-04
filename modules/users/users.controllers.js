@@ -55,7 +55,7 @@ const addUser = async (req, res) => {
         message: "User already exist",
       });
     } else {
-      const password = bcrypt.hashSync(123456, 20);
+      const password = bcrypt.hashSync("123456", 10);
       user = await User.create({
         name,
         phone,
