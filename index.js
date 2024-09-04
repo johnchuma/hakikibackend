@@ -13,6 +13,8 @@ const DistributerProductRoutes = require("./modules/distributerProducts/distribu
 const FarmerProductRoutes = require("./modules/farmerProducts/farmerProducts.routes");
 const ReviewRoutes = require("./modules/reviews/reviews.routes");
 const ProductScanRoutes = require("./modules/productScans/productScans.routes");
+const DistributerRoutes = require("./modules/distributors/distributers.routes");
+const SupplierRoutes = require("./modules/suppliers/suppliers.routes");
 
 const QRCode = require("qrcode");
 //Initiate express
@@ -32,6 +34,8 @@ app.use("/products", ProductRoutes);
 app.use("/lots", LotsRoutes);
 app.use("/batches", BatchesRoutes);
 app.use("/reviews", ReviewRoutes);
+app.use("/distributors", DistributerRoutes);
+app.use("/suppliers", SupplierRoutes);
 app.use("/productScans", ProductScanRoutes);
 app.use("/farmerProducts", FarmerProductRoutes);
 app.use("/distributerProducts", DistributerProductRoutes);

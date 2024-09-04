@@ -1,9 +1,9 @@
-const { Supplier, User } = require("../../models");
+const { Distributor, Supplier, User } = require("../../models");
 const { randomNumber } = require("../../utils/random_number");
 const { errorResponse, successResponse } = require("../../utils/responses");
-const findSupplierByUUID = async (uuid) => {
+const findDistributorByUUID = async (uuid) => {
   try {
-    const response = await Supplier.findOne({
+    const response = await Distributor.findOne({
       where: {
         uuid,
       },
@@ -14,25 +14,25 @@ const findSupplierByUUID = async (uuid) => {
     throw error;
   }
 };
-const addSupplier = async (req, res) => {
+const addDistributor = async (req, res) => {
   try {
     const { packageSize, stickersCount } = req.body;
-    let supplierNo = randomNumber();
+    let distributorNo = randomNumber();
     let userId = req.user.id;
-    const supplier = await Supplier.create({
-      supplierNo,
+    const distributor = await Distributor.create({
+      distributorNo,
       userId,
       packageSize,
       stickersCount,
     });
-    successResponse(res, supplier);
+    successResponse(res, distributor);
   } catch (error) {
     errorResponse(res, error);
   }
 };
-const getSuppliers = async (req, res) => {
+const getDistributors = async (req, res) => {
   try {
-    const response = await Supplier.findAll({
+    const response = await Distributor.findAll({
       where: {
         userId: req.user.id,
       },
@@ -43,19 +43,19 @@ const getSuppliers = async (req, res) => {
     errorResponse(res, response);
   }
 };
-const deleteSupplier = async (req, res) => {
+const deleteDistributor = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const supplier = await findSupplierByUUID(uuid);
-    const response = await supplier.destroy();
+    const distributor = await findDistributorByUUID(uuid);
+    const response = await distributor.destroy();
     successResponse(res, response);
   } catch (error) {}
 };
-const updateSupplier = async (req, res) => {
+const updateDistributor = async (req, res) => {
   try {
     const { uuid } = req.params;
-    const supplier = await findSupplierByUUID(uuid);
-    const response = await supplier.update({
+    const distributor = await findDistributorByUUID(uuid);
+    const response = await distributor.update({
       ...req.body,
     });
     successResponse(res, response);
@@ -63,9 +63,9 @@ const updateSupplier = async (req, res) => {
 };
 
 module.exports = {
-  addSupplier,
-  deleteSupplier,
-  getSuppliers,
-  updateSupplier,
-  findSupplierByUUID,
+  addDistributor,
+  deleteDistributor,
+  getDistributors,
+  updateDistributor,
+  findDistributorByUUID,
 };
