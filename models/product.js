@@ -9,9 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.hasOne(models.FarmerProduct);
-      Product.hasOne(models.BatchProduct);
-      Product.hasOne(models.ProductScan);
+      Product.hasOne(models.FarmerProduct, {
+        onDelete: "CASCADE",
+      });
+      Product.hasOne(models.BatchProduct, {
+        onDelete: "CASCADE",
+      });
+      Product.hasOne(models.ProductScan, {
+        onDelete: "CASCADE",
+      });
       Product.belongsTo(models.User, { as: "supplier", foreignKey: "userId" });
     }
   }
