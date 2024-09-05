@@ -102,6 +102,8 @@ const addProduct = async (req, res) => {
     }
     const user = req.user;
     const scratchCode = randomNumberWith12Chars();
+    console.log(scratchCode);
+    console.log(randomNumberWith12Chars());
     const product = await Product.create({
       name,
       image,
