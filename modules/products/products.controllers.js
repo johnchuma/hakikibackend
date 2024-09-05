@@ -101,9 +101,6 @@ const addProduct = async (req, res) => {
       image = await getUrl(req);
     }
     const user = req.user;
-    const scratchCode = randomNumberWith12Chars();
-    console.log(scratchCode);
-    console.log(randomNumberWith12Chars());
     const product = await Product.create({
       name,
       image,
@@ -111,7 +108,7 @@ const addProduct = async (req, res) => {
       expireDate,
       details,
       introduction,
-      scratchCode,
+      scratchCode: randomNumberWith12Chars(),
       OID,
       size,
       userId: user.id,
