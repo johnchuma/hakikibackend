@@ -8,9 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Supplier);
-      User.hasOne(models.Distributer);
-      User.hasMany(models.Product);
+      User.hasOne(models.Supplier, {
+        onDelete: "CASCADE",
+      });
+      User.hasOne(models.Distributer, {
+        onDelete: "CASCADE",
+      });
+      User.hasMany(models.Product, {
+        onDelete: "CASCADE",
+      });
     }
   }
   User.init(
