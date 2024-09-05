@@ -3,5 +3,7 @@ module.exports.randomNumber = () => {
 };
 
 module.exports.randomNumberWith12Chars = () => {
-  return Math.floor(1000000000000 + Math.random() * 9000000000000);
+  return Math.floor(Math.random() * 1000000000000)
+    .toString()
+    .padStart(12, "0");
 };
